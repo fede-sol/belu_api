@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 class Hotel(models.Model):
     name = models.CharField(max_length=255)
@@ -29,6 +30,14 @@ class Room(models.Model):
     name = models.CharField(max_length=255)
     price = models.FloatField()
     state = models.CharField(max_length=255, choices=ROOM_STATE_CHOICES, default='available')
+
+    def is_available(self, start_date, end_date):
+        from reservations.models import Reservation
+        overlapping_reservations = Reservation.objects.filter(
+            Q(room=self) &
+            (Q(start_date__lte=end_date) & Q(end_date__gte=start_date))
+        )
+        return not overlapping_reservations.exists() and self.state == 'available'
 
 class RoomImage(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
