@@ -29,7 +29,7 @@ class BeluUser(AbstractUser):
     REQUIRED_FIELDS = []
 
 class BeluUserProfile(models.Model):
-    user = models.OneToOneField(BeluUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(BeluUser, on_delete=models.CASCADE, related_name='belu_user_profile')
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     document = models.CharField(max_length=20)
