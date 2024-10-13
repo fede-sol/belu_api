@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import BeluUserProfile, BeluUser
 
-# Register your models here.
+admin.site.register(BeluUser)
+admin.site.register(BeluUserProfile)
