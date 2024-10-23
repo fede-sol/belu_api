@@ -34,9 +34,12 @@ class RoomSerializer(serializers.ModelSerializer):
 
 class HotelSerializer(serializers.ModelSerializer):
     rooms = RoomSerializer(many=True, read_only=True)
-    images = HotelImageSerializer(many=True, read_only=True)
+    images = serializers.SerializerMethodField()
     services = ServiceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Hotel
         fields = ['id', 'name', 'address', 'city', 'country', 'phone', 'email', 'stars', 'description', 'latitude', 'longitude', 'rooms', 'images', 'services']
+
+    def get_images(self, obj):
+        return HotelImageSerializer(HotelImage.objects.filter(hotel=obj), many=True).data

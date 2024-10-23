@@ -49,3 +49,6 @@ class Service(models.Model):
     price = models.FloatField()
     is_available = models.BooleanField(default=True)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

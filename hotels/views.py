@@ -59,3 +59,44 @@ class RoomImageListView(generics.ListAPIView):
 class RoomImageDetailView(generics.RetrieveAPIView):
     queryset = RoomImage.objects.all()
     serializer_class = RoomImageSerializer
+
+
+class HotelRoomListView(generics.ListAPIView):
+    serializer_class = RoomSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = RoomFilter
+    search_fields = ['name']
+    ordering_fields = ['price', 'floor', 'number']
+
+    def get_queryset(self):
+        hotel_id = self.kwargs['hotel_id']
+        return Room.objects.filter(hotel_id=hotel_id)
+
+class HotelServiceListView(generics.ListAPIView):
+    serializer_class = ServiceSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['name']
+
+    def get_queryset(self):
+        hotel_id = self.kwargs['hotel_id']
+        return Service.objects.filter(hotel_id=hotel_id)
+
+class HotelImageListView(generics.ListAPIView):
+    serializer_class = HotelImageSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['hotel']
+
+    def get_queryset(self):
+        hotel_id = self.kwargs['hotel_id']
+        return HotelImage.objects.filter(hotel_id=hotel_id)
+
+
+class RoomImageListView(generics.ListAPIView):
+    serializer_class = RoomImageSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['room']
+
+    def get_queryset(self):
+        room_id = self.kwargs['room_id']
+        return RoomImage.objects.filter(room_id=room_id)
+
