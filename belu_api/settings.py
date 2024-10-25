@@ -141,7 +141,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://localhost:8000','https://beluapi-staging.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://localhost:8000','https://beluapi-staging.up.railway.app','https://kbu18bkm73.execute-api.us-east-1.amazonaws.com']
 
 CORS_ALLOW_ALL_ORIGINS=True
 CORS_ALLOW_CREDENTIALS = True
